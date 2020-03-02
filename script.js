@@ -42,8 +42,25 @@ searchButton.addEventListener('click', function() {
       })
       const movieContainer = document.querySelector('.movie-container');
       movieContainer.innerHTML = cards;
+
+      // Ketika tombol detail di-klik
+
+      const modalDetailButton = document.querySelectorAll('.modal-detail-button');
+      modalDetailButton.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const imdbID = this.dataset.imdbid;
+          fetch('http://www.omdbapi.com/?apikey=1521a912&i=' + imdbID)
+            .then(res => res.json())
+            .then(m => {
+              const movieDetail = showMovieDetail(m);
+              const modalBody = document.querySelector('.modal-body');
+              modalBody.innerHTML = movieDetail;
+            })
+        })
+      })
     })
 })
+
 
 function showCards(m) {
   return ` 
